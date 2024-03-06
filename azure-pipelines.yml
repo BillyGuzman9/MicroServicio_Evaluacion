@@ -1,0 +1,24 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+- job: Build
+  steps:
+    - script: |
+        javac HolaMundo.java
+        jar cvf holamundo.jar HolaMundo.class
+        echo "Hola mundo prueba banco agricola"
+      displayName: 'Compilar y Empaquetar'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)'
+        ArtifactName: 'drop'
